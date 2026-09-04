@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BABEAT - Introdução Alimentar</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="logo">
+            🍼 BABEAT
+        </div>
+
+        <nav>
+            <a href="/">Início</a>
+            <a href="#">Receitas</a>
+            <a href="#">Calendário</a>
+            <a href="#">Agenda</a>
+            <a href="#">Favoritos</a>
+            <a href="#">Suporte</a>
+        </nav>
+
+        <div class="usuario">
+            <a href="#">Entrar</a>
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-text">
+
+                <h1>
+                    Uma alimentação saudável
+                    começa desde cedo.
+                </h1>
+
+                <p>
+                    O BABEAT ajuda pais e responsáveis
+                    durante a introdução alimentar,
+                    oferecendo receitas e informações
+                    organizadas para cada fase do bebê.
+                </p>
+
+                <div class="botoes">
+
+                    <a href="#" class="btn principal">
+                        Ver receitas
+                    </a>
+
+                    <a href="#" class="btn secundario">
+                        Conheça o BABEAT
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-image">
+
+                <div class="icone-bebe">
+                    🍼
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="recursos">
+
+            <h2>O que você encontra no BABEAT?</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <span>🍎</span>
+                    <h3>Receitas</h3>
+                    <p>
+                        Encontre receitas organizadas
+                        de acordo com a idade do bebê.
+                    </p>
+                </div>
+
+
+                <div class="card">
+                    <span>📅</span>
+                    <h3>Calendário</h3>
+                    <p>
+                        Visualize os dias do mês e
+                        organize sua rotina.
+                    </p>
+                </div>
+
+
+                <div class="card">
+                    <span>📋</span>
+                    <h3>Agenda</h3>
+                    <p>
+                        Cadastre consultas médicas
+                        e outros compromissos.
+                    </p>
+                </div>
+
+
+                <div class="card">
+                    <span>❤️</span>
+                    <h3>Favoritos</h3>
+                    <p>
+                        Salve suas receitas favoritas
+                        para encontrar facilmente.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            © 2026 BABEAT — Introdução Alimentar
+        </p>
+
+    </footer>
+
+
+    <script src="{% static 'app/js/script.js' %}"></script>
+
+</body>
+
+</html>
