@@ -1,0 +1,1 @@
+console.log("BABEAT iniciado com sucesso!")
