@@ -25,7 +25,7 @@ class IndexViewTests(SimpleTestCase):
         """A view deve renderizar o template principal do aplicativo."""
         response = self.client.get(reverse('index'))
 
-        self.assertTemplateUsed(response, 'app/index.html')
+        self.assertTemplateUsed(response, 'app/dashboard_home.html')
 
     def test_index_view_contains_core_content(self):
         """A resposta deve conter os textos principais apresentados ao usuário."""
@@ -33,7 +33,7 @@ class IndexViewTests(SimpleTestCase):
 
         self.assertContains(response, 'BABEAT')
         self.assertContains(response, 'Uma alimentação saudável')
-        self.assertContains(response, 'O que você encontra no BABEAT?')
+        self.assertContains(response, 'Atalhos rápidos')
 
     def test_index_view_loads_static_assets(self):
         """O template deve gerar URLs para o CSS e o JavaScript estáticos."""

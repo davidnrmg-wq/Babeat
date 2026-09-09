@@ -1,0 +1,24 @@
+{% extends 'app/dashboard_base.html' %}
+
+{% block title %}Início — BABEAT{% endblock %}
+
+{% block content %}
+<section class="dashboard-home">
+    <div class="welcome-panel">
+        <div>
+            <p class="eyebrow">BEM-VINDO AO BABEAT</p>
+            <h1>Uma alimentação saudável começa desde cedo.</h1>
+            <p>Organize receitas, rotina e cuidados do seu bebê em um só lugar.</p>
+            <a href="{% url 'receitas' %}" class="theme-button">Ver receitas</a>
+        </div>
+        <div class="welcome-illustration">🍼</div>
+    </div>
+    <div class="home-section-title"><h2>Atalhos rápidos</h2><span>Explore o BABEAT</span></div>
+    <div class="shortcut-grid">
+        <a class="shortcut-card" href="{% url 'receitas' %}"><span>🍎</span><h3>Receitas</h3><p>Ideias nutritivas para cada fase.</p></a>
+        <a class="shortcut-card" href="{% url 'calendario' %}"><span>📅</span><h3>Calendário</h3><p>Planeje sua semana alimentar.</p></a>
+        <a class="shortcut-card" href="{% url 'agenda' %}"><span>📋</span><h3>Agenda</h3><p>Organize seus compromissos.</p></a>
+        <a class="shortcut-card" href="{% url 'favoritos' %}"><span>♥</span><h3>Favoritos</h3><p>Encontre suas receitas salvas.</p></a>
+    </div>
+</section>
+{% endblock %}

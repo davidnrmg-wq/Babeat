@@ -11,7 +11,7 @@
     <aside class="sidebar">
         <a class="sidebar-logo" href="{% url 'index' %}">BABEAT</a>
         <nav class="side-nav" aria-label="Navegação principal">
-            <a href="{% url 'index' %}">Início</a>
+            <a class="{% if active_page == 'inicio' %}active{% endif %}" href="{% url 'index' %}">Início</a>
             <a class="{% if active_page == 'receitas' %}active{% endif %}" href="{% url 'receitas' %}">Receitas</a>
             <a class="{% if active_page == 'agenda' %}active{% endif %}" href="{% url 'agenda' %}">Agenda</a>
             <a class="{% if active_page == 'suporte' %}active{% endif %}" href="{% url 'suporte' %}">Suporte</a>
@@ -20,5 +20,6 @@
         </nav>
     </aside>
     <main class="app-content">{% block content %}{% endblock %}</main>
+    <script src="{% static 'app/js/script.js' %}"></script>
 </body>
 </html>

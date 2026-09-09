@@ -1,0 +1,27 @@
+{% extends 'app/dashboard_base.html' %}
+
+{% block title %}{{ title }} — BABEAT{% endblock %}
+
+{% block content %}
+<section class="section-page">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">BABEAT</p>
+            <h1>{{ heading }}</h1>
+        </div>
+        <a class="profile-link" href="{% url 'entrar' %}">Meu perfil</a>
+    </div>
+    <p class="section-description">{{ description }}</p>
+    <div class="section-grid">
+        {% for item in items %}
+        <article class="feature-card">
+            <span class="feature-icon">{{ item.icon }}</span>
+            <div>
+                <h2>{{ item.title }}</h2>
+                <p>{{ item.description }}</p>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
