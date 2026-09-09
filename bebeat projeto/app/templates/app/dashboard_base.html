@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BABEAT{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+</head>
+<body class="app-shell">
+    <aside class="sidebar">
+        <a class="sidebar-logo" href="{% url 'index' %}">BABEAT</a>
+        <nav class="side-nav" aria-label="Navegação principal">
+            <a href="{% url 'index' %}">Início</a>
+            <a class="{% if active_page == 'receitas' %}active{% endif %}" href="{% url 'receitas' %}">Receitas</a>
+            <a class="{% if active_page == 'agenda' %}active{% endif %}" href="{% url 'agenda' %}">Agenda</a>
+            <a class="{% if active_page == 'suporte' %}active{% endif %}" href="{% url 'suporte' %}">Suporte</a>
+            <a class="{% if active_page == 'favoritos' %}active{% endif %}" href="{% url 'favoritos' %}">Favoritos</a>
+            <a href="{% url 'entrar' %}">Perfil</a>
+        </nav>
+    </aside>
+    <main class="app-content">{% block content %}{% endblock %}</main>
+</body>
+</html>

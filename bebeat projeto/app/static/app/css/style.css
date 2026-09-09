@@ -242,3 +242,37 @@ footer {
     margin: 0 auto 35px;
     line-height: 1.6;
 }
+
+/* Interface visual Babeat baseada nas referencias */
+:root { --pink-bg:#ffd9d9; --purple:#8b4bf6; --purple-dark:#7c3aed; --cyan:#4ed6df; --text:#17131d; }
+.app-shell { min-height:100vh; display:flex; background:var(--pink-bg); color:var(--text); }
+.sidebar { width:216px; min-height:100vh; flex:0 0 216px; padding:42px 24px; background:var(--purple); color:white; }
+.sidebar-logo { display:block; margin-bottom:52px; color:white; font-size:28px; font-weight:800; letter-spacing:.5px; text-align:center; text-decoration:none; }
+.side-nav { display:flex; flex-direction:column; align-items:stretch; gap:10px; }
+.side-nav a { padding:7px 10px; border-radius:5px; color:white; font-size:16px; font-weight:700; text-align:center; text-decoration:none; transition:background .2s,transform .2s; }
+.side-nav a:hover,.side-nav a.active { background:var(--cyan); transform:translateX(2px); }
+.app-content { flex:1; min-width:0; }
+.recipe-page { max-width:1040px; margin:0 auto; padding:40px 46px 70px; }
+.page-heading { display:flex; align-items:center; justify-content:space-between; margin-bottom:36px; }
+.eyebrow { margin-bottom:5px; color:var(--purple-dark); font-size:12px; font-weight:800; letter-spacing:2px; }
+.page-heading h1 { font-size:38px; line-height:1; }
+.profile-link { color:var(--purple-dark); font-weight:700; text-decoration:none; }
+.recipe-grid { display:grid; grid-template-columns:repeat(3,minmax(150px,1fr)); gap:26px 44px; }
+.recipe-card { overflow:hidden; background:white; box-shadow:0 8px 18px rgba(108,58,145,.08); transition:transform .2s,box-shadow .2s; }
+.recipe-card:hover { transform:translateY(-4px); box-shadow:0 12px 24px rgba(108,58,145,.16); }
+.recipe-card img { display:block; width:100%; height:142px; object-fit:cover; }
+.recipe-card-body { position:relative; min-height:58px; padding:9px 12px 12px; }
+.recipe-card h2 { margin-bottom:4px; font-size:17px; }
+.recipe-card p { color:#665d6d; font-size:12px; }
+.favorite-button { position:absolute; top:10px; right:10px; border:0; background:transparent; color:var(--purple-dark); cursor:pointer; font-size:24px; line-height:1; }
+.login-page { min-height:100vh; display:grid; place-items:center; background:var(--pink-bg); }
+.login-card { width:min(90vw,225px); min-height:368px; padding:30px 15px 28px; border-radius:24px; background:linear-gradient(160deg,#8c4cf5 0%,#8745ee 100%); box-shadow:0 14px 30px rgba(119,65,197,.15); }
+.login-brand { display:block; margin-bottom:34px; color:white; font-size:27px; font-weight:800; text-align:center; text-decoration:none; }
+.login-card form { display:flex; flex-direction:column; }
+.login-card label { margin:0 0 7px 15px; color:white; font-size:14px; font-weight:700; }
+.login-card input { width:100%; height:25px; margin-bottom:28px; padding:0 13px; border:0; border-radius:20px; outline:none; background:white; color:var(--text); }
+.login-card .forgot-password { align-self:flex-end; margin-top:-22px; color:white; font-size:8px; font-weight:700; text-decoration:none; }
+.login-card button { width:119px; height:30px; align-self:center; margin-top:61px; border:0; border-radius:3px; background:var(--cyan); color:white; cursor:pointer; font-size:14px; font-weight:800; }
+.login-card button:hover { filter:brightness(.95); }
+@media (max-width:720px) { .app-shell{display:block;} .sidebar{width:100%;min-height:auto;padding:22px 18px 16px;} .sidebar-logo{margin-bottom:18px;} .side-nav{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:5px;} .side-nav a{padding:7px 12px;font-size:14px;} .recipe-page{padding:30px 20px 50px;} .page-heading{margin-bottom:24px;} .page-heading h1{font-size:30px;} .recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 16px;} }
+@media (max-width:420px) { .recipe-grid{grid-template-columns:1fr;} .recipe-card img{height:180px;} }

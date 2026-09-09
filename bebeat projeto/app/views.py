@@ -1,16 +1,59 @@
 from django.shortcuts import render
 
 
+RECIPE_CARDS = [
+    {
+        'name': 'Picolé de kiwi',
+        'description': 'Refrescante e natural',
+        'image': 'app/images/kiwi-picole.jpg',
+    },
+    {
+        'name': 'Bolinho de banana',
+        'description': 'Lanche macio para o bebê',
+        'image': 'app/images/snacks.jpg',
+    },
+    {
+        'name': 'Purê de kiwi',
+        'description': 'Uma opção simples e nutritiva',
+        'image': 'app/images/kiwi-pure.jpg',
+    },
+    {
+        'name': 'Picolé de frutas',
+        'description': 'Receita fácil para dias quentes',
+        'image': 'app/images/kiwi-picole.jpg',
+    },
+    {
+        'name': 'Biscoitinho caseiro',
+        'description': 'Textura ideal para explorar',
+        'image': 'app/images/snacks.jpg',
+    },
+    {
+        'name': 'Creme de frutas',
+        'description': 'Leve, colorido e saboroso',
+        'image': 'app/images/kiwi-pure.jpg',
+    },
+]
+
+
 def index(request):
     return render(request, 'app/index.html')
 
 
 def receitas(request):
-    return render(request, 'app/page.html', {
+    return render(request, 'app/recipe_grid.html', {
         'title': 'Receitas',
-        'heading': 'Receitas para cada fase',
-        'description': 'Encontre ideias simples e nutritivas para a introdução alimentar do seu bebê.',
-        'items': ['Purê de batata-doce', 'Papinha de abóbora', 'Banana amassada'],
+        'heading': 'Receitas',
+        'active_page': 'receitas',
+        'recipes': RECIPE_CARDS,
+    })
+
+
+def favoritos(request):
+    return render(request, 'app/recipe_grid.html', {
+        'title': 'Favoritos',
+        'heading': 'Favoritos',
+        'active_page': 'favoritos',
+        'recipes': RECIPE_CARDS[:3],
     })
 
 
@@ -32,15 +75,6 @@ def agenda(request):
     })
 
 
-def favoritos(request):
-    return render(request, 'app/page.html', {
-        'title': 'Favoritos',
-        'heading': 'Receitas favoritas',
-        'description': 'Acesse rapidamente as receitas que você salvou.',
-        'items': ['Suas receitas salvas aparecerão aqui.'],
-    })
-
-
 def suporte(request):
     return render(request, 'app/page.html', {
         'title': 'Suporte',
@@ -51,9 +85,4 @@ def suporte(request):
 
 
 def entrar(request):
-    return render(request, 'app/page.html', {
-        'title': 'Entrar',
-        'heading': 'Acesse sua conta',
-        'description': 'A área de autenticação estará disponível em breve.',
-        'items': ['Entrar', 'Criar uma conta', 'Recuperar senha'],
-    })
+    return render(request, 'app/login.html')

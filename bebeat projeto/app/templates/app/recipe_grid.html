@@ -1,0 +1,28 @@
+{% extends 'app/dashboard_base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} — BABEAT{% endblock %}
+
+{% block content %}
+<section class="recipe-page">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">BABEAT</p>
+            <h1>{{ heading }}</h1>
+        </div>
+        <a class="profile-link" href="{% url 'entrar' %}">Meu perfil</a>
+    </div>
+    <div class="recipe-grid">
+        {% for recipe in recipes %}
+        <article class="recipe-card">
+            <img src="{% static recipe.image %}" alt="{{ recipe.name }}">
+            <div class="recipe-card-body">
+                <h2>{{ recipe.name }}</h2>
+                <p>{{ recipe.description }}</p>
+                {% if active_page == 'receitas' %}<button class="favorite-button" type="button" aria-label="Adicionar {{ recipe.name }} aos favoritos">♡</button>{% endif %}
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

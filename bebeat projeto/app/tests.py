@@ -68,3 +68,35 @@ class NavigationViewTests(SimpleTestCase):
         for url_name, _ in self.navigation_pages:
             with self.subTest(url_name=url_name):
                 self.assertContains(response, reverse(url_name))
+
+
+class DesignedPagesTests(SimpleTestCase):
+    """Verifica as telas criadas a partir das referências visuais."""
+
+    def test_login_page_renders_form(self):
+        response = self.client.get(reverse('entrar'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'app/login.html')
+        self.assertContains(response, 'BABEAT')
+        self.assertContains(response, 'E-mail')
+        self.assertContains(response, 'Senha')
+        self.assertContains(response, 'ENTRAR')
+
+    def test_recipes_page_renders_recipe_cards_and_active_menu(self):
+        response = self.client.get(reverse('receitas'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'app/recipe_grid.html')
+        self.assertContains(response, 'Picolé de kiwi')
+        self.assertContains(response, 'app/images/kiwi-picole.jpg')
+        self.assertContains(response, 'class="active"')
+
+    def test_favorites_page_uses_recipe_grid(self):
+        response = self.client.get(reverse('favoritos'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'app/recipe_grid.html')
+        self.assertContains(response, 'Favoritos')
+        self.assertContains(response, 'Picolé de kiwi')
+        self.assertContains(response, 'app/images/kiwi-picole.jpg')
