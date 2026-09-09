@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BABEAT - Introdução Alimentar{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo"><a href="{% url 'index' %}">🍼 BABEAT</a></div>
+        <nav aria-label="Navegação principal">
+            <a href="{% url 'index' %}">Início</a>
+            <a href="{% url 'receitas' %}">Receitas</a>
+            <a href="{% url 'calendario' %}">Calendário</a>
+            <a href="{% url 'agenda' %}">Agenda</a>
+            <a href="{% url 'favoritos' %}">Favoritos</a>
+            <a href="{% url 'suporte' %}">Suporte</a>
+        </nav>
+        <div class="usuario"><a href="{% url 'entrar' %}">Entrar</a></div>
+    </header>
+    <main>{% block content %}{% endblock %}</main>
+    <footer><p>© 2026 BABEAT — Introdução Alimentar</p></footer>
+    <script src="{% static 'app/js/script.js' %}"></script>
+</body>
+</html>

@@ -41,3 +41,30 @@ class IndexViewTests(SimpleTestCase):
 
         self.assertContains(response, '/static/app/css/style.css')
         self.assertContains(response, '/static/app/js/script.js')
+
+
+class NavigationViewTests(SimpleTestCase):
+    """Verifica as páginas acessíveis pelo menu principal."""
+
+    navigation_pages = (
+        ('receitas', 'Receitas'),
+        ('calendario', 'Calendário'),
+        ('agenda', 'Agenda'),
+        ('favoritos', 'Favoritos'),
+        ('suporte', 'Suporte'),
+        ('entrar', 'Entrar'),
+    )
+
+    def test_navigation_pages_return_success(self):
+        for url_name, expected_title in self.navigation_pages:
+            with self.subTest(url_name=url_name):
+                response = self.client.get(reverse(url_name))
+                self.assertEqual(response.status_code, 200)
+                self.assertContains(response, expected_title)
+
+    def test_home_page_contains_named_navigation_links(self):
+        response = self.client.get(reverse('index'))
+
+        for url_name, _ in self.navigation_pages:
+            with self.subTest(url_name=url_name):
+                self.assertContains(response, reverse(url_name))
