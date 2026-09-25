@@ -42,7 +42,7 @@ def agenda(request):
     return render(request, 'app/agenda.html', {
         'active_page': 'agenda',
         'days': ('Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'),
-        'times': ('07:00 am', '12:00 am', '17:00 pm'),
+        'times': ('07:00', '12:00', '17:00'),
         'rows': range(3),
         'events': (
             {'column': 1, 'row': 1, 'title': 'Refeição', 'description': 'Café da manhã'},

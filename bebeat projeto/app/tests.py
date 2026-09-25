@@ -82,6 +82,7 @@ class DesignedPagesTests(SimpleTestCase):
         self.assertContains(response, 'E-mail')
         self.assertContains(response, 'Senha')
         self.assertContains(response, 'ENTRAR')
+        self.assertContains(response, reverse('suporte'))
 
     def test_recipes_page_renders_recipe_cards_and_active_menu(self):
         response = self.client.get(reverse('receitas'))
@@ -109,8 +110,9 @@ class DesignedPagesTests(SimpleTestCase):
         self.assertContains(response, 'Voltar')
         self.assertContains(response, 'Segunda')
         self.assertContains(response, 'Sexta')
-        self.assertContains(response, '07:00 am')
+        self.assertContains(response, '07:00')
         self.assertContains(response, 'Refeição')
+        self.assertContains(response, 'novo-compromisso')
 
     def test_agenda_back_button_returns_to_calendar(self):
         response = self.client.get(reverse('agenda'))
