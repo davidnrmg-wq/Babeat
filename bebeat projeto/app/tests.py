@@ -69,6 +69,8 @@ class NavigationViewTests(SimpleTestCase):
             with self.subTest(url_name=url_name):
                 self.assertContains(response, reverse(url_name))
 
+        self.assertContains(response, '>Calendário<')
+
 
 class DesignedPagesTests(SimpleTestCase):
     """Verifica as telas criadas a partir das referências visuais."""
