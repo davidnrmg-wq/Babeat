@@ -1,3 +1,5 @@
+import calendar
+
 from django.shortcuts import render
 
 
@@ -28,14 +30,11 @@ def favoritos(request):
 
 
 def calendario(request):
-    return render(request, 'app/section_page.html', {
-        'title': 'Calendário', 'heading': 'Calendário alimentar', 'active_page': 'calendario',
-        'description': 'Organize a rotina de refeições e acompanhe novas experiências alimentares.',
-        'items': [
-            {'icon': '🗓️', 'title': 'Planejar refeições', 'description': 'Monte um plano simples para os próximos dias.'},
-            {'icon': '🥕', 'title': 'Registrar alimentos', 'description': 'Anote os alimentos que o bebê já experimentou.'},
-            {'icon': '✨', 'title': 'Acompanhar evolução', 'description': 'Observe novas preferências e conquistas.'},
-        ],
+    month_calendar = calendar.Calendar(firstweekday=6).monthdayscalendar(2026, 8)
+    return render(request, 'app/calendar.html', {
+        'active_page': 'calendario',
+        'weekdays': ('Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'),
+        'weeks': month_calendar,
     })
 
 
