@@ -39,14 +39,16 @@ def calendario(request):
 
 
 def agenda(request):
-    return render(request, 'app/section_page.html', {
-        'title': 'Agenda', 'heading': 'Sua agenda', 'active_page': 'agenda',
-        'description': 'Cadastre consultas, retornos e outros compromissos importantes.',
-        'items': [
-            {'icon': '🩺', 'title': 'Adicionar consulta', 'description': 'Registre consultas com pediatras e nutricionistas.'},
-            {'icon': '🔔', 'title': 'Criar lembrete', 'description': 'Não deixe passar nenhum compromisso importante.'},
-            {'icon': '📌', 'title': 'Próximos compromissos', 'description': 'Veja sua agenda de forma rápida e organizada.'},
-        ],
+    return render(request, 'app/agenda.html', {
+        'active_page': 'agenda',
+        'days': ('Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'),
+        'times': ('07:00 am', '12:00 am', '17:00 pm'),
+        'rows': range(3),
+        'events': (
+            {'column': 1, 'row': 1, 'title': 'Refeição', 'description': 'Café da manhã'},
+            {'column': 2, 'row': 2, 'title': 'Refeição', 'description': 'Almoço'},
+            {'column': 4, 'row': 1, 'title': 'Refeição', 'description': 'Lanche'},
+        ),
     })
 
 

@@ -1,0 +1,40 @@
+{% extends 'app/dashboard_base.html' %}
+
+{% block title %}Agenda — BABEAT{% endblock %}
+
+{% block content %}
+<section class="agenda-page" aria-labelledby="agenda-title">
+    <header class="agenda-topbar">
+        <a class="back-button" href="{% url 'calendario' %}">Voltar</a>
+        <h1 id="agenda-title" class="sr-only">Agenda semanal</h1>
+        <span class="agenda-calendar-icon" aria-hidden="true">▣</span>
+    </header>
+
+    <div class="agenda-board">
+        <div class="agenda-time-column" aria-hidden="true">
+            <span class="clock-icon">◷</span>
+            {% for time in times %}<span class="time-label">{{ time }}</span>{% endfor %}
+        </div>
+        <div class="agenda-schedule">
+            <div class="agenda-days">
+                {% for day in days %}<span class="day-pill">{{ day }}</span>{% endfor %}
+            </div>
+            <div class="agenda-grid" aria-label="Grade semanal de compromissos">
+                {% for row in rows %}
+                    {% for day in days %}
+                        <div class="agenda-cell"></div>
+                    {% endfor %}
+                {% endfor %}
+                {% for event in events %}
+                    <article class="agenda-event event-{{ event.column }}-{{ event.row }}">
+                        <span class="event-handle"></span>
+                        <strong>{{ event.title }}</strong>
+                        {% if event.description %}<small>{{ event.description }}</small>{% endif %}
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <a class="agenda-add-link" href="#novo-compromisso">+ Adicionar compromisso</a>
+</section>
+{% endblock %}

@@ -100,3 +100,19 @@ class DesignedPagesTests(SimpleTestCase):
         self.assertContains(response, 'Favoritos')
         self.assertContains(response, 'Picolé de kiwi')
         self.assertContains(response, 'app/images/kiwi-picole.jpg')
+
+    def test_agenda_page_renders_weekly_schedule(self):
+        response = self.client.get(reverse('agenda'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'app/agenda.html')
+        self.assertContains(response, 'Voltar')
+        self.assertContains(response, 'Segunda')
+        self.assertContains(response, 'Sexta')
+        self.assertContains(response, '07:00 am')
+        self.assertContains(response, 'Refeição')
+
+    def test_agenda_back_button_returns_to_calendar(self):
+        response = self.client.get(reverse('agenda'))
+
+        self.assertContains(response, reverse('calendario'))
