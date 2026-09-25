@@ -12,6 +12,15 @@
         </div>
         <a class="profile-link" href="{% url 'entrar' %}">Meu perfil</a>
     </div>
+
+    {% if empty_favorites %}
+    <div class="empty-state">
+        <span class="empty-state-icon" aria-hidden="true">♡</span>
+        <h2>Você ainda não tem favoritos</h2>
+        <p>Toque no coração de uma receita para salvá-la nesta página.</p>
+        <a class="theme-button" href="{% url 'receitas' %}">Explorar receitas</a>
+    </div>
+    {% else %}
     <div class="recipe-grid">
         {% for recipe in recipes %}
         <article class="recipe-card">
@@ -19,10 +28,16 @@
             <div class="recipe-card-body">
                 <h2>{{ recipe.name }}</h2>
                 <p>{{ recipe.description }}</p>
-                {% if active_page == 'receitas' %}<button class="favorite-button" type="button" aria-label="Adicionar {{ recipe.name }} aos favoritos">♡</button>{% endif %}
+                <form method="post" action="{% url 'alternar_favorito' %}" class="favorite-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+                    <input type="hidden" name="next" value="{% if active_page == 'favoritos' %}{% url 'favoritos' %}{% else %}{% url 'receitas' %}{% endif %}">
+                    <button class="favorite-button{% if recipe.is_favorite %} is-favorite{% endif %}" type="submit" aria-label="{% if recipe.is_favorite %}Remover {{ recipe.name }} dos favoritos{% else %}Adicionar {{ recipe.name }} aos favoritos{% endif %}" aria-pressed="{{ recipe.is_favorite|yesno:'true,false' }}">{% if recipe.is_favorite %}♥{% else %}♡{% endif %}</button>
+                </form>
             </div>
         </article>
         {% endfor %}
     </div>
+    {% endif %}
 </section>
 {% endblock %}

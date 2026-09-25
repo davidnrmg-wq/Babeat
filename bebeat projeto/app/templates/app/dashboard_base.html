@@ -19,7 +19,14 @@
             <a href="{% url 'entrar' %}">Perfil</a>
         </nav>
     </aside>
-    <main class="app-content">{% block content %}{% endblock %}</main>
+    <main class="app-content">
+        {% if messages %}
+        <div class="site-messages" aria-live="polite">
+            {% for message in messages %}<p class="site-message {{ message.tags }}">{{ message }}</p>{% endfor %}
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
     <script src="{% static 'app/js/script.js' %}"></script>
 </body>
 </html>

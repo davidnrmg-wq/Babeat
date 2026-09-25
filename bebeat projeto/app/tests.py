@@ -1,4 +1,4 @@
-from django.test import SimpleTestCase
+from django.test import SimpleTestCase, TestCase
 from django.urls import resolve, reverse
 
 from .views import index
@@ -72,7 +72,7 @@ class NavigationViewTests(SimpleTestCase):
         self.assertContains(response, '>Calendário<')
 
 
-class DesignedPagesTests(SimpleTestCase):
+class DesignedPagesTests(TestCase):
     """Verifica as telas criadas a partir das referências visuais."""
 
     def test_login_page_renders_form(self):
@@ -101,8 +101,39 @@ class DesignedPagesTests(SimpleTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'app/recipe_grid.html')
         self.assertContains(response, 'Favoritos')
-        self.assertContains(response, 'Picolé de kiwi')
-        self.assertContains(response, 'app/images/kiwi-picole.jpg')
+        self.assertContains(response, 'Você ainda não tem favoritos')
+
+    def test_user_can_add_and_remove_a_favorite(self):
+        add_response = self.client.post(reverse('alternar_favorito'), {
+            'recipe_id': 'kiwi-picole',
+            'next': reverse('receitas'),
+        })
+        self.assertRedirects(add_response, reverse('receitas'))
+
+        favorites_response = self.client.get(reverse('favoritos'))
+        self.assertContains(favorites_response, 'Picolé de kiwi')
+        self.assertContains(favorites_response, 'Remover Picolé de kiwi dos favoritos')
+
+        remove_response = self.client.post(reverse('alternar_favorito'), {
+            'recipe_id': 'kiwi-picole',
+            'next': reverse('favoritos'),
+        })
+        self.assertRedirects(remove_response, reverse('favoritos'))
+        empty_response = self.client.get(reverse('favoritos'))
+        self.assertContains(empty_response, 'Você ainda não tem favoritos')
+
+    def test_invalid_favorite_recipe_returns_bad_request(self):
+        response = self.client.post(reverse('alternar_favorito'), {'recipe_id': 'nao-existe'})
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_favorite_redirect_does_not_accept_external_url(self):
+        response = self.client.post(reverse('alternar_favorito'), {
+            'recipe_id': 'kiwi-picole',
+            'next': 'https://example.com',
+        })
+
+        self.assertRedirects(response, reverse('receitas'))
 
     def test_agenda_page_renders_weekly_schedule(self):
         response = self.client.get(reverse('agenda'))

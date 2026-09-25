@@ -1,16 +1,32 @@
 import calendar
 
-from django.shortcuts import render
+from django.contrib import messages
+from django.http import HttpResponseBadRequest
+from django.shortcuts import redirect, render
+from django.views.decorators.http import require_POST
 
 
 RECIPE_CARDS = [
-    {'name': 'Picolé de kiwi', 'description': 'Refrescante e natural', 'image': 'app/images/kiwi-picole.jpg'},
-    {'name': 'Bolinho de banana', 'description': 'Lanche macio para o bebê', 'image': 'app/images/snacks.jpg'},
-    {'name': 'Purê de kiwi', 'description': 'Uma opção simples e nutritiva', 'image': 'app/images/kiwi-pure.jpg'},
-    {'name': 'Picolé de frutas', 'description': 'Receita fácil para dias quentes', 'image': 'app/images/kiwi-picole.jpg'},
-    {'name': 'Biscoitinho caseiro', 'description': 'Textura ideal para explorar', 'image': 'app/images/snacks.jpg'},
-    {'name': 'Creme de frutas', 'description': 'Leve, colorido e saboroso', 'image': 'app/images/kiwi-pure.jpg'},
+    {'id': 'kiwi-picole', 'name': 'Picolé de kiwi', 'description': 'Refrescante e natural', 'image': 'app/images/kiwi-picole.jpg'},
+    {'id': 'banana-bolinho', 'name': 'Bolinho de banana', 'description': 'Lanche macio para o bebê', 'image': 'app/images/snacks.jpg'},
+    {'id': 'kiwi-pure', 'name': 'Purê de kiwi', 'description': 'Uma opção simples e nutritiva', 'image': 'app/images/kiwi-pure.jpg'},
+    {'id': 'frutas-picole', 'name': 'Picolé de frutas', 'description': 'Receita fácil para dias quentes', 'image': 'app/images/kiwi-picole.jpg'},
+    {'id': 'biscoitinho-caseiro', 'name': 'Biscoitinho caseiro', 'description': 'Textura ideal para explorar', 'image': 'app/images/snacks.jpg'},
+    {'id': 'creme-de-frutas', 'name': 'Creme de frutas', 'description': 'Leve, colorido e saboroso', 'image': 'app/images/kiwi-pure.jpg'},
 ]
+FAVORITES_SESSION_KEY = 'babeat_favorite_recipes'
+
+
+def _favorite_ids(request):
+    return set(request.session.get(FAVORITES_SESSION_KEY, []))
+
+
+def _recipes_with_favorites(request, recipes):
+    favorite_ids = _favorite_ids(request)
+    return [
+        {**recipe, 'is_favorite': recipe['id'] in favorite_ids}
+        for recipe in recipes
+    ]
 
 
 def index(request):
@@ -19,14 +35,42 @@ def index(request):
 
 def receitas(request):
     return render(request, 'app/recipe_grid.html', {
-        'title': 'Receitas', 'heading': 'Receitas', 'active_page': 'receitas', 'recipes': RECIPE_CARDS,
+        'title': 'Receitas', 'heading': 'Receitas', 'active_page': 'receitas',
+        'recipes': _recipes_with_favorites(request, RECIPE_CARDS),
     })
 
 
 def favoritos(request):
+    favorite_ids = _favorite_ids(request)
+    recipes = [recipe for recipe in RECIPE_CARDS if recipe['id'] in favorite_ids]
     return render(request, 'app/recipe_grid.html', {
-        'title': 'Favoritos', 'heading': 'Favoritos', 'active_page': 'favoritos', 'recipes': RECIPE_CARDS[:3],
+        'title': 'Favoritos', 'heading': 'Favoritos', 'active_page': 'favoritos',
+        'recipes': _recipes_with_favorites(request, recipes),
+        'empty_favorites': not recipes,
     })
+
+
+@require_POST
+def alternar_favorito(request):
+    recipe_id = request.POST.get('recipe_id', '')
+    recipe = next((item for item in RECIPE_CARDS if item['id'] == recipe_id), None)
+    if recipe is None:
+        return HttpResponseBadRequest('Receita inválida.')
+
+    favorite_ids = _favorite_ids(request)
+    if recipe_id in favorite_ids:
+        favorite_ids.remove(recipe_id)
+        messages.info(request, f'{recipe["name"]} foi removida dos favoritos.')
+    else:
+        favorite_ids.add(recipe_id)
+        messages.success(request, f'{recipe["name"]} foi adicionada aos favoritos.')
+
+    request.session[FAVORITES_SESSION_KEY] = sorted(favorite_ids)
+    request.session.modified = True
+    next_url = request.POST.get('next', '')
+    if not next_url.startswith('/') or next_url.startswith('//'):
+        next_url = '/receitas/'
+    return redirect(next_url)
 
 
 def calendario(request):
